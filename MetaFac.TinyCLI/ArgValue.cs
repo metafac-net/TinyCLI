@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     public abstract class ArgValue
     {

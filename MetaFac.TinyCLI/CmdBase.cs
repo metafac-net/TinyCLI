@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     public abstract class CmdBase<TResult> : CmdBase
     {
@@ -23,7 +23,7 @@ namespace MiniCLI
             col1.Footer = new Markup("Credits");
             var col2 = new TableColumn(help);
             col2.Width = 100;
-            col2.Footer = new Markup($"UI powered by [green]https://www.nuget.org/packages/MiniCLI[/] and [green]https://www.nuget.org/packages/Spectre.Console[/]");
+            col2.Footer = new Markup($"UI powered by [green]https://www.nuget.org/packages/MetaFac.TinyCLI[/] and [green]https://www.nuget.org/packages/Spectre.Console[/]");
             table.AddColumn(col1);
             table.AddColumn(col2);
             if (!_options.DisplayFlags.HasFlag(DisplayFlags.HideInputs) && _inputs.Count > 0)
@@ -35,7 +35,7 @@ namespace MiniCLI
             {
                 if (logger.EntryCount > 0)
                 {
-                    table.AddRow(new Markup("Log"), logger. GetEntriesAsTable());
+                    table.AddRow(new Markup("Log"), logger.GetEntriesAsTable());
                     table.AddRow("", "");
                 }
             }

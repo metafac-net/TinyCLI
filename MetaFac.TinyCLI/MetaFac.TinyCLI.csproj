@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0;net7.0</TargetFrameworks>
     <WarningsAsErrors>nullable</WarningsAsErrors>
-    <PackageProjectUrl>https://dev.azure.com/labapps21/LAP</PackageProjectUrl>
+    <PackageProjectUrl>https://dev.azure.com/MetaFac/OSR</PackageProjectUrl>
     <PackageTags>CLI, command-line</PackageTags>
-    <RepositoryUrl>https://dev.azure.com/LabApps21/LAP/_git/MiniCLI</RepositoryUrl>
-    <Product>MiniCLI</Product>
+    <RepositoryUrl>https://dev.azure.com/MetaFac/OSR/_git/TinyCLI</RepositoryUrl>
+    <Product>TinyCLI</Product>
     <Description>Minimal CLI helpers.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>Copyright (c) 2022-2023 MetaFac</Copyright>

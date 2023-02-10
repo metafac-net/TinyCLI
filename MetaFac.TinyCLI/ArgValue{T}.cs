@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     internal sealed class ArgValue<T> : ArgValue
     {

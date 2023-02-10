@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     public class LogOptions
     {

@@ -1,7 +1,7 @@
 ﻿using Spectre.Console;
 using System.Text;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     internal static class MarkupHelper
     {

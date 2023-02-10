@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     public sealed class Cmd<TResult> : CmdBase<TResult>
     {

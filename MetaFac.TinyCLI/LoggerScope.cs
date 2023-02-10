@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     internal sealed class LogScope : IDisposable
     {
@@ -25,7 +25,7 @@ namespace MiniCLI
 
         public void Dispose()
         {
-            if(_disposed) return;
+            if (_disposed) return;
             _disposed = true;
             _externalScope?.Dispose();
             _cleanup();

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     public abstract class CommandsBase
     {
@@ -60,7 +60,7 @@ namespace MiniCLI
             col1.Footer = new Markup("Credits");
             var col2 = new TableColumn(help);
             col2.Width = 100;
-            col2.Footer = new Markup($"UI powered by [green]https://www.nuget.org/packages/MiniCLI[/] and [green]https://www.nuget.org/packages/Spectre.Console[/]");
+            col2.Footer = new Markup($"UI powered by [green]https://www.nuget.org/packages/MetaFac.TinyCLI[/] and [green]https://www.nuget.org/packages/Spectre.Console[/]");
             table.AddColumn(col1);
             table.AddColumn(col2);
             if (error is not null)

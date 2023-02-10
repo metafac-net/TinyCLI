@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     public sealed class Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult> : CmdBase<TResult>
     {
@@ -47,15 +47,15 @@ namespace MiniCLI
         {
             return await RunAction(logger, args, Name, Help, async () =>
             {
-                (TArg1 arg1, List<string> remaining1) = GetValue<TArg1>(args, ArgDef1);
-                (TArg2 arg2, List<string> remaining2) = GetValue<TArg2>(remaining1.ToArray(), ArgDef2);
-                (TArg3 arg3, List<string> remaining3) = GetValue<TArg3>(remaining2.ToArray(), ArgDef3);
-                (TArg4 arg4, List<string> remaining4) = GetValue<TArg4>(remaining3.ToArray(), ArgDef4);
-                (TArg5 arg5, List<string> remaining5) = GetValue<TArg5>(remaining4.ToArray(), ArgDef5);
-                (TArg6 arg6, List<string> remaining6) = GetValue<TArg6>(remaining5.ToArray(), ArgDef6);
-                (TArg7 arg7, List<string> remaining7) = GetValue<TArg7>(remaining6.ToArray(), ArgDef7);
-                (TArg8 arg8, List<string> remaining8) = GetValue<TArg8>(remaining7.ToArray(), ArgDef8);
-                (TArg9 arg9, List<string> remaining9) = GetValue<TArg9>(remaining8.ToArray(), ArgDef9);
+                (TArg1 arg1, List<string> remaining1) = GetValue(args, ArgDef1);
+                (TArg2 arg2, List<string> remaining2) = GetValue(remaining1.ToArray(), ArgDef2);
+                (TArg3 arg3, List<string> remaining3) = GetValue(remaining2.ToArray(), ArgDef3);
+                (TArg4 arg4, List<string> remaining4) = GetValue(remaining3.ToArray(), ArgDef4);
+                (TArg5 arg5, List<string> remaining5) = GetValue(remaining4.ToArray(), ArgDef5);
+                (TArg6 arg6, List<string> remaining6) = GetValue(remaining5.ToArray(), ArgDef6);
+                (TArg7 arg7, List<string> remaining7) = GetValue(remaining6.ToArray(), ArgDef7);
+                (TArg8 arg8, List<string> remaining8) = GetValue(remaining7.ToArray(), ArgDef8);
+                (TArg9 arg9, List<string> remaining9) = GetValue(remaining8.ToArray(), ArgDef9);
                 CheckExtraArguments(remaining9);
                 return await _action(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
             },

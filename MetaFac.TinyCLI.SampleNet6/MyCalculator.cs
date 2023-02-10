@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-namespace MiniCLI.SampleNet6
+namespace MetaFac.TinyCLI.SampleNet6
 {
     internal static class MyCalculator
     {

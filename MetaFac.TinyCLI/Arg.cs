@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     public abstract class ArgBase
     {
@@ -59,6 +59,6 @@ namespace MiniCLI
         /// <param name="parser"></param>
         /// <param name="description"></param>
         public Arg(string tag1, string tag2, string description, Func<string, T> parser)
-            : this(tag1, tag2, parser, true, default(T), description) { }
+            : this(tag1, tag2, parser, true, default, description) { }
     }
 }

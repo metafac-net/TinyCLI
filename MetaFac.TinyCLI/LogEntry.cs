@@ -1,8 +1,7 @@
 ﻿using System;
-
 using Microsoft.Extensions.Logging;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     internal readonly struct LogEntry
     {

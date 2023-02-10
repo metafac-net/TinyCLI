@@ -1,4 +1,4 @@
-﻿namespace MiniCLI
+﻿namespace MetaFac.TinyCLI
 {
     public class CmdOptions
     {

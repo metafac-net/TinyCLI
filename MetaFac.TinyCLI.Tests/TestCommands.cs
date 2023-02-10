@@ -1,4 +1,6 @@
-﻿namespace MiniCLI.Tests
+﻿using MetaFac.TinyCLI;
+
+namespace MetaFac.TinyCLI.Tests
 {
     internal class TestCommands : CommandsBase
     {

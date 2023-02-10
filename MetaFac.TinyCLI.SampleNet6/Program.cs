@@ -2,8 +2,8 @@
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
-using MiniCLI;
-using MyCommands;
+using MetaFac.TinyCLI;
+using MetaFac.TinyCLI.SampleNet6;
 
 ValueTask<DateTime> UnixDateToDateTime(double unixDate)
 {

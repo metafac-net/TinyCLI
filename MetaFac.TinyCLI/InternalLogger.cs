@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using Spectre.Console;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
 
     public sealed class InternalLogger : ILogger
@@ -43,7 +43,7 @@ namespace MiniCLI
 
         public bool IsEnabled(LogLevel logLevel)
         {
-            return (logLevel >= _options.MinimumLevel)
+            return logLevel >= _options.MinimumLevel
                 || (_options.ExternalLogger is not null ? _options.ExternalLogger.IsEnabled(logLevel) : false);
         }
 
@@ -77,11 +77,11 @@ namespace MiniCLI
             {
                 foreach (char ch in input)
                 {
-                    if (Char.IsControl(ch)) continue;
+                    if (char.IsControl(ch)) continue;
 
                     if (inBody)
                     {
-                        if (Char.IsWhiteSpace(ch))
+                        if (char.IsWhiteSpace(ch))
                         {
                             // save whitespace
                             queue.Enqueue(ch);
@@ -97,7 +97,7 @@ namespace MiniCLI
                     }
                     else
                     {
-                        if (!Char.IsWhiteSpace(ch))
+                        if (!char.IsWhiteSpace(ch))
                         {
                             inBody = true;
                             yield return ch;
@@ -132,21 +132,21 @@ namespace MiniCLI
         {
             StringBuilder result = new StringBuilder();
             int emitted = 0;
-            foreach(char ch in Trimmed(scope))
+            foreach (char ch in Trimmed(scope))
             {
                 emitted++;
                 AppendCh(result, ch, allowMarkup);
             }
-            if(emitted > 0)
+            if (emitted > 0)
             {
                 result.Append(' ');
             }
-            foreach(char ch in Trimmed(input))
+            foreach (char ch in Trimmed(input))
             {
                 emitted++;
                 AppendCh(result, ch, allowMarkup);
             }
-            if(emitted == 0)
+            if (emitted == 0)
             {
                 result.Append(' ');
             }
@@ -181,7 +181,7 @@ namespace MiniCLI
                     _ => entry.LogLevel.ToString()
                 };
                 table.AddRow(
-                    entry.Timestamp.ToString(_options.TimeFormat), 
+                    entry.Timestamp.ToString(_options.TimeFormat),
                     $"[{levelColor}]{levelAbbr}[/]",
                     FormatMessage(entry.Scope, entry.Message, _options.AllowMarkup));
             }

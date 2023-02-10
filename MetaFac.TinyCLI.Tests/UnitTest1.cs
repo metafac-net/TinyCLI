@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace MiniCLI.Tests
+namespace MetaFac.TinyCLI.Tests
 {
     public class UnitTest1
     {

@@ -1,9 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Microsoft.Extensions.Logging;
-using MiniCLI;
 
-namespace MyCommands
+namespace MetaFac.TinyCLI.SampleNet6
 {
     internal class InnerCommands1 : CommandsBase
     {
@@ -15,7 +14,7 @@ namespace MyCommands
     {
         public InnerCommands2(CmdOptions options) : base("inner2", "Inner 2 commands", options)
         {
-            AddCommand<string, string>("bye", "Returns a good-bye message",
+            AddCommand("bye", "Returns a good-bye message",
                 new Arg<string>("n", "name", "A name", s => s, "Friend"),
                 (s) => new ValueTask<string>($"Goodbye, {s}."));
         }
@@ -42,7 +41,7 @@ namespace MyCommands
         {
             AddSubCommands(new InnerCommands1(options));
             AddSubCommands(new InnerCommands2(options));
-            AddCommand<string, int, string>("hello", "Returns an age relevant greeting message",
+            AddCommand("hello", "Returns an age relevant greeting message",
                 new Arg<string>("n", "name", "A name", s => s, "Friend"),
                 new Arg<int>("a", "age", "Age in years", int.Parse, 35),
                 Greeting);

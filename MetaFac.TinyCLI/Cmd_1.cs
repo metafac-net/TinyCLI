@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MiniCLI
+namespace MetaFac.TinyCLI
 {
     public sealed class Cmd<TArg1, TResult> : CmdBase<TResult>
     {
@@ -23,7 +23,7 @@ namespace MiniCLI
         {
             return await RunAction(logger, args, Name, Help, async () =>
             {
-                (TArg1 arg1, List<string> remaining1) = GetValue<TArg1>(args, ArgDef1);
+                (TArg1 arg1, List<string> remaining1) = GetValue(args, ArgDef1);
                 CheckExtraArguments(remaining1);
                 return await _action(arg1);
             },

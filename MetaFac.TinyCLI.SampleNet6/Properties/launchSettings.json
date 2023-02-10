@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MiniCLI.SampleNet6": {
+      "commandName": "Project",
+      "commandLineArgs": "hello -n Fred -a 70"
+    }
+  }
+}

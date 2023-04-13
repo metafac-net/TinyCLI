@@ -54,7 +54,7 @@ namespace MetaFac.TinyCLI.SampleNet6
             return new ValueTask<DateTime>(DateTime.UnixEpoch.AddDays(unixDate).ToLocalTime());
         }
 
-        private ValueTask<double> DateTimeToUnixDate(DateTime date)
+        private ValueTask<double> DateTimeToUnixDate(DateTime date, OtherArgs extras)
         {
             var result = date.ToUniversalTime().Subtract(DateTime.UnixEpoch).TotalDays;
             return new ValueTask<double>(result);
@@ -62,12 +62,12 @@ namespace MetaFac.TinyCLI.SampleNet6
 
         public UnixTools() : base(nameof(UnixTools), "My Unix tools", null)
         {
-            AddCommand(
+            AddCommand<double, DateTime>(
                 "unix2dt",
                 "Converts a Unix date number to a DateTime",
                 new Arg<double>("n", "number", "The Unix date number", double.Parse),
                 UnixDateToDateTime);
-            AddCommand(
+            AddCommand<DateTime, double>(
                 "dt2unix",
                 "Converts a DateTime to a Unix date number",
                 new Arg<DateTime>("d", "date", "The Unix date number", DateTime.Parse),

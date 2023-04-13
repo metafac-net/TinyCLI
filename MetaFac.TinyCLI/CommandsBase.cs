@@ -126,10 +126,35 @@ namespace MetaFac.TinyCLI
             _subCommands.Add(subCommand.Name, subCommand);
         }
 
+        protected void AddCommand<TResult>(
+            string command, string help,
+            Func<ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TResult>(command, help, action, Options, exitFunc));
+        }
+
+        protected void AddCommand<TResult>(
+            string command, string help,
+            Func<OtherArgs, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TResult>(command, help, action, Options, exitFunc));
+        }
+
         protected void AddCommand<TArg1, TResult>(
             string command, string help,
             Arg<TArg1> argDef1,
             Func<TArg1, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TResult>(command, help, argDef1, action, Options, exitFunc));
+        }
+
+        protected void AddCommand<TArg1, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Func<TArg1, OtherArgs, ValueTask<TResult>> action,
             Func<TResult, int>? exitFunc = null)
         {
             _commands.Add(command, new Cmd<TArg1, TResult>(command, help, argDef1, action, Options, exitFunc));
@@ -146,12 +171,35 @@ namespace MetaFac.TinyCLI
                 command, help, argDef1, argDef2, action, Options, exitFunc));
         }
 
+        protected void AddCommand<TArg1, TArg2, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Func<TArg1, TArg2, OtherArgs, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TArg2, TResult>(
+                command, help, argDef1, argDef2, action, Options, exitFunc));
+        }
+
         protected void AddCommand<TArg1, TArg2, TArg3, TResult>(
             string command, string help,
             Arg<TArg1> argDef1,
             Arg<TArg2> argDef2,
             Arg<TArg3> argDef3,
             Func<TArg1, TArg2, TArg3, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TResult>(
+                command, help, argDef1, argDef2, argDef3, action, Options, exitFunc));
+        }
+
+        protected void AddCommand<TArg1, TArg2, TArg3, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Arg<TArg3> argDef3,
+            Func<TArg1, TArg2, TArg3, OtherArgs, ValueTask<TResult>> action,
             Func<TResult, int>? exitFunc = null)
         {
             _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TResult>(
@@ -171,6 +219,19 @@ namespace MetaFac.TinyCLI
                 command, help, argDef1, argDef2, argDef3, argDef4, action, Options, exitFunc));
         }
 
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Arg<TArg3> argDef3,
+            Arg<TArg4> argDef4,
+            Func<TArg1, TArg2, TArg3, TArg4, OtherArgs, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TResult>(
+                command, help, argDef1, argDef2, argDef3, argDef4, action, Options, exitFunc));
+        }
+
         protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>(
             string command, string help,
             Arg<TArg1> argDef1,
@@ -179,6 +240,20 @@ namespace MetaFac.TinyCLI
             Arg<TArg4> argDef4,
             Arg<TArg5> argDef5,
             Func<TArg1, TArg2, TArg3, TArg4, TArg5, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>(
+                command, help, argDef1, argDef2, argDef3, argDef4, argDef5, action, Options, exitFunc));
+        }
+
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Arg<TArg3> argDef3,
+            Arg<TArg4> argDef4,
+            Arg<TArg5> argDef5,
+            Func<TArg1, TArg2, TArg3, TArg4, TArg5, OtherArgs, ValueTask<TResult>> action,
             Func<TResult, int>? exitFunc = null)
         {
             _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>(
@@ -200,6 +275,21 @@ namespace MetaFac.TinyCLI
                 command, help, argDef1, argDef2, argDef3, argDef4, argDef5, argDef6, action, Options, exitFunc));
         }
 
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Arg<TArg3> argDef3,
+            Arg<TArg4> argDef4,
+            Arg<TArg5> argDef5,
+            Arg<TArg6> argDef6,
+            Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, OtherArgs, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TResult>(
+                command, help, argDef1, argDef2, argDef3, argDef4, argDef5, argDef6, action, Options, exitFunc));
+        }
+
         protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult>(
             string command, string help,
             Arg<TArg1> argDef1,
@@ -210,6 +300,22 @@ namespace MetaFac.TinyCLI
             Arg<TArg6> argDef6,
             Arg<TArg7> argDef7,
             Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult>(
+                command, help, argDef1, argDef2, argDef3, argDef4, argDef5, argDef6, argDef7, action, Options, exitFunc));
+        }
+
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Arg<TArg3> argDef3,
+            Arg<TArg4> argDef4,
+            Arg<TArg5> argDef5,
+            Arg<TArg6> argDef6,
+            Arg<TArg7> argDef7,
+            Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, OtherArgs, ValueTask<TResult>> action,
             Func<TResult, int>? exitFunc = null)
         {
             _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult>(
@@ -233,6 +339,23 @@ namespace MetaFac.TinyCLI
                 command, help, argDef1, argDef2, argDef3, argDef4, argDef5, argDef6, argDef7, argDef8, action, Options, exitFunc));
         }
 
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Arg<TArg3> argDef3,
+            Arg<TArg4> argDef4,
+            Arg<TArg5> argDef5,
+            Arg<TArg6> argDef6,
+            Arg<TArg7> argDef7,
+            Arg<TArg8> argDef8,
+            Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, OtherArgs, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TResult>(
+                command, help, argDef1, argDef2, argDef3, argDef4, argDef5, argDef6, argDef7, argDef8, action, Options, exitFunc));
+        }
+
         protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult>(
             string command, string help,
             Arg<TArg1> argDef1,
@@ -245,6 +368,24 @@ namespace MetaFac.TinyCLI
             Arg<TArg8> argDef8,
             Arg<TArg9> argDef9,
             Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, ValueTask<TResult>> action,
+            Func<TResult, int>? exitFunc = null)
+        {
+            _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult>(
+                command, help, argDef1, argDef2, argDef3, argDef4, argDef5, argDef6, argDef7, argDef8, argDef9, action, Options, exitFunc));
+        }
+
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult>(
+            string command, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Arg<TArg3> argDef3,
+            Arg<TArg4> argDef4,
+            Arg<TArg5> argDef5,
+            Arg<TArg6> argDef6,
+            Arg<TArg7> argDef7,
+            Arg<TArg8> argDef8,
+            Arg<TArg9> argDef9,
+            Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, OtherArgs, ValueTask<TResult>> action,
             Func<TResult, int>? exitFunc = null)
         {
             _commands.Add(command, new Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult>(

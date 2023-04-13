@@ -15,7 +15,8 @@ namespace MetaFac.TinyCLI
         private readonly Arg<TArg7> ArgDef7;
         private readonly Arg<TArg8> ArgDef8;
         private readonly Arg<TArg9> ArgDef9;
-        private readonly Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, ValueTask<TResult>> _action;
+        private readonly Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, ValueTask<TResult>> _actionMin;
+        private readonly Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, OtherArgs, ValueTask<TResult>> _actionExt;
 
         public Cmd(string name, string help,
             Arg<TArg1> argDef1,
@@ -41,7 +42,36 @@ namespace MetaFac.TinyCLI
             ArgDef7 = argDef7;
             ArgDef8 = argDef8;
             ArgDef9 = argDef9;
-            _action = action;
+            _actionMin = action;
+            _actionExt = null!;
+        }
+
+        public Cmd(string name, string help,
+            Arg<TArg1> argDef1,
+            Arg<TArg2> argDef2,
+            Arg<TArg3> argDef3,
+            Arg<TArg4> argDef4,
+            Arg<TArg5> argDef5,
+            Arg<TArg6> argDef6,
+            Arg<TArg7> argDef7,
+            Arg<TArg8> argDef8,
+            Arg<TArg9> argDef9,
+            Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, OtherArgs, ValueTask<TResult>> action,
+            CmdOptions? options,
+            Func<TResult, int>? exitFunc)
+            : base(name, help, options, exitFunc)
+        {
+            ArgDef1 = argDef1;
+            ArgDef2 = argDef2;
+            ArgDef3 = argDef3;
+            ArgDef4 = argDef4;
+            ArgDef5 = argDef5;
+            ArgDef6 = argDef6;
+            ArgDef7 = argDef7;
+            ArgDef8 = argDef8;
+            ArgDef9 = argDef9;
+            _actionMin = null!;
+            _actionExt = action;
         }
 
         protected override async ValueTask<int> OnRun(InternalLogger? logger, string[] args)
@@ -58,7 +88,14 @@ namespace MetaFac.TinyCLI
                 (TArg8 arg8, List<string> remaining8) = GetValue(remaining7.ToArray(), ArgDef8);
                 (TArg9 arg9, List<string> remaining9) = GetValue(remaining8.ToArray(), ArgDef9);
                 CheckExtraArguments(remaining9);
-                return await _action(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+                if (_actionExt is not null)
+                {
+                    return await _actionExt(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, new OtherArgs(remaining9));
+                }
+                else
+                {
+                    return await _actionMin(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+                }
             },
             ArgDef1, ArgDef2, ArgDef3, ArgDef4, ArgDef5, ArgDef6, ArgDef7, ArgDef8, ArgDef9);
         }

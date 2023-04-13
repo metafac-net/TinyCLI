@@ -28,8 +28,9 @@ namespace MetaFac.TinyCLI
             Arg<TArg8> argDef8,
             Arg<TArg9> argDef9,
             Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, ValueTask<TResult>> action,
-            CmdOptions? options = null)
-            : base(name, help, options)
+            CmdOptions? options,
+            Func<TResult, int>? exitFunc)
+            : base(name, help, options, exitFunc)
         {
             ArgDef1 = argDef1;
             ArgDef2 = argDef2;

@@ -15,7 +15,7 @@ var command1 = new Cmd<double, DateTime>(
                 "unix2dt",
                 "Converts a Unix date number to a DateTime",
                 new Arg<double>("n", "number", "The Unix date number", double.Parse),
-                UnixDateToDateTime, null);
+                UnixDateToDateTime, null, null);
 
 //int exitCode = await command1.Run(args);
 

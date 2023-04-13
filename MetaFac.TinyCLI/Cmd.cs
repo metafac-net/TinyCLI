@@ -10,8 +10,9 @@ namespace MetaFac.TinyCLI
 
         public Cmd(string name, string help,
             Func<ValueTask<TResult>> action,
-            CmdOptions? options = null)
-            : base(name, help, options)
+            CmdOptions? options,
+            Func<TResult, int>? exitFunc)
+            : base(name, help, options, exitFunc)
         {
             _action = action;
         }

@@ -10,8 +10,11 @@ namespace MetaFac.TinyCLI
 {
     public abstract class CmdBase<TResult> : CmdBase
     {
-        protected CmdBase(string name, string help, CmdOptions? options = null) : base(name, help, options)
+        protected readonly Func<TResult, int> _exitFunc;
+        private static int DefaultExitFunc(TResult result) => 0;
+        protected CmdBase(string name, string help, CmdOptions? options, Func<TResult,int>? exitFunc) : base(name, help, options)
         {
+            _exitFunc = exitFunc ?? DefaultExitFunc;
         }
 
         private void WriteAll(string name, string help, InternalLogger? logger, params ArgBase[] argDefs)
@@ -107,11 +110,11 @@ namespace MetaFac.TinyCLI
         private CmdState _state = CmdState.NotRun;
         private TResult? _result;
         private Exception? _error;
-        protected void SetResult(TResult result, int exitCode = 0)
+        protected void SetResult(TResult result)
         {
             _state = CmdState.Success;
             _result = result;
-            _exitCode = exitCode;
+            _exitCode = _exitFunc(result);
         }
         protected void SetError(Exception error, int exitCode = -1)
         {

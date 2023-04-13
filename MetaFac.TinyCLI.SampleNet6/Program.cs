@@ -35,7 +35,7 @@ var command1 = new Cmd<double, DateTime>(
 
 ILogger? logger = null; // loggerFactory.CreateLogger<OuterCommands>();
 
-var logOptions = new LogOptions(minimumLevel: LogLevel.Trace, allowMarkup: false, externalLogger: logger);
+var logOptions = new LogOptions(minimumLevel: LogLevel.Trace, allowMarkup: true, externalLogger: logger);
 var options = new CmdOptions(logOptions: logOptions);
 var commands = new OuterCommands(options);
 int exitCode = await commands.Run(args);

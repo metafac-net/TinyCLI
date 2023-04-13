@@ -180,10 +180,11 @@ namespace MetaFac.TinyCLI
                     LogLevel.Information => "Info.",
                     _ => entry.LogLevel.ToString()
                 };
+                string message = FormatMessage(entry.Scope, entry.Message, _options.AllowMarkup);
                 table.AddRow(
                     entry.Timestamp.ToString(_options.TimeFormat),
                     $"[{levelColor}]{levelAbbr}[/]",
-                    FormatMessage(entry.Scope, entry.Message, _options.AllowMarkup));
+                    $"[{levelColor}]{message}[/]");
             }
             return table;
         }

@@ -23,8 +23,8 @@ namespace MetaFac.TinyCLI.SampleNet6
     {
         private ValueTask<string> Greeting(string name, int age)
         {
-            Logger.LogDebug("Name={name}", name);
-            Logger.LogDebug("Age={age}", age);
+            Logger.LogDebug("Name=[blue]{name}[/]", name);
+            Logger.LogWarning("Age=[aqua]{age}[/]", age);
             if (age <= 0)
                 throw new ArgumentOutOfRangeException(nameof(age), age, "Must be > 0");
             string result = age switch
@@ -33,7 +33,7 @@ namespace MetaFac.TinyCLI.SampleNet6
                 > 65 => $"Greetings, Sr. {name}.",
                 _ => $"Hello, {name}!",
             };
-            Logger.LogDebug("Greeting={result}", result);
+            Logger.LogInformation("Greeting={result}", result);
             return new ValueTask<string>(result);
         }
 

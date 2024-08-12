@@ -1,4 +1,7 @@
 # TinyCLI 
+
+*todo build badge*
+
 A minimalist, convention-based, .NET focused package for quickly 
 building command-line interfaces (CLIs). Use Spectre.Console to produce a clean UI.
 

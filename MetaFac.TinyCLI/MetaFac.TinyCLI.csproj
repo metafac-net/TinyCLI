@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
     <WarningsAsErrors>nullable</WarningsAsErrors>
-    <PackageProjectUrl>https://dev.azure.com/MetaFac/OSR</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/metafac-net/TinyCLI</PackageProjectUrl>
     <PackageTags>CLI, command-line</PackageTags>
-    <RepositoryUrl>https://dev.azure.com/MetaFac/OSR/_git/TinyCLI</RepositoryUrl>
+    <RepositoryUrl>https://github.com/metafac-net/TinyCLI</RepositoryUrl>
     <Product>TinyCLI</Product>
     <Description>Minimal CLI helpers.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright (c) 2022-2023 MetaFac</Copyright>
+    <Copyright>Copyright (c) 2022-2024 MetaFac</Copyright>
     <Company>MetaFac</Company>
     <Authors>MetaFac Contributors</Authors>
     <LangVersion>latest</LangVersion>

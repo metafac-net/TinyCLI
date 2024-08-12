@@ -1,0 +1,200 @@
+﻿namespace MetaFac.TinyCLI
+{
+    public abstract class ArgBase
+    {
+        protected ArgBase(string tag1, string tag2, bool required, System.Type argType, string description) { }
+        public System.Type ArgType { get; }
+        public string Description { get; }
+        public bool Required { get; }
+        public string Tag1 { get; }
+        public string Tag2 { get; }
+        public object UntypedDefaultValue { get; }
+        protected abstract System.Type OnGetArgType();
+        protected abstract object OnGetDefaultValue();
+    }
+    public abstract class ArgValue
+    {
+        protected ArgValue(string? input, MetaFac.TinyCLI.ArgBase argDef) { }
+        public MetaFac.TinyCLI.ArgBase ArgDef { get; }
+        public string? Input { get; }
+        public System.Type GetArgType() { }
+        public object? GetArgValue() { }
+        protected abstract System.Type OnGetArgType();
+        protected abstract object? OnGetArgValue();
+    }
+    public sealed class Arg<T> : MetaFac.TinyCLI.ArgBase
+    {
+        public Arg(string tag1, string tag2, string description, System.Func<string, T> parser) { }
+        public Arg(string tag1, string tag2, string description, System.Func<string, T> parser, T defaultValue) { }
+        public System.Func<string, T> Parser { get; }
+        public T TypedDefaultValue { get; }
+        protected override System.Type OnGetArgType() { }
+        protected override object OnGetDefaultValue() { }
+    }
+    public abstract class CmdBase
+    {
+        protected int _exitCode;
+        protected readonly System.Collections.Generic.List<MetaFac.TinyCLI.ArgValue> _inputs;
+        protected readonly MetaFac.TinyCLI.CmdOptions _options;
+        protected CmdBase(string name, string help, MetaFac.TinyCLI.CmdOptions? options = null) { }
+        public string Help { get; }
+        public string Name { get; }
+        protected void CheckExtraArguments(System.Collections.Generic.List<string> extraArgs) { }
+        protected Spectre.Console.Table GetCommandHelpAsTable(MetaFac.TinyCLI.ArgBase[] argDefs) { }
+        protected Spectre.Console.Table GetInputsAsTable() { }
+        protected Spectre.Console.Markup GetUsage(MetaFac.TinyCLI.ArgBase[] argDefs) { }
+        [return: System.Runtime.CompilerServices.TupleElementNames(new string[] {
+                null,
+                "unusedArgs"})]
+        protected System.ValueTuple<T, System.Collections.Generic.List<string>> GetValue<T>(string[] args, MetaFac.TinyCLI.Arg<T> argDef) { }
+        protected bool HelpRequested(string[] args) { }
+        protected abstract System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args);
+        public System.Threading.Tasks.ValueTask<int> Run(string[] args, MetaFac.TinyCLI.InternalLogger? logger = null) { }
+        protected void SaveValue<T>(string? input, T value, MetaFac.TinyCLI.Arg<T> argDef) { }
+    }
+    public abstract class CmdBase<TResult> : MetaFac.TinyCLI.CmdBase
+    {
+        protected readonly System.Func<TResult, int> _exitFunc;
+        protected CmdBase(string name, string help, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected System.Threading.Tasks.ValueTask<int> RunAction(MetaFac.TinyCLI.InternalLogger? logger, string[] args, string commandName, string help, System.Func<System.Threading.Tasks.ValueTask<TResult>> action, params MetaFac.TinyCLI.ArgBase[] argDefs) { }
+        protected void SetError(System.Exception error, int exitCode = -1) { }
+        protected void SetResult(TResult result) { }
+    }
+    public class CmdOptions
+    {
+        public CmdOptions(int abnormalExitCode = -1, bool caseSensitiveTags = false, bool allowExtraArguments = false, MetaFac.TinyCLI.DisplayFlags displayFlags = 0, MetaFac.TinyCLI.LogOptions? logOptions = null) { }
+        public int AbnormalExitCode { get; }
+        public bool AllowExtraArguments { get; }
+        public bool CaseSensitiveTags { get; }
+        public MetaFac.TinyCLI.DisplayFlags DisplayFlags { get; }
+        public MetaFac.TinyCLI.LogOptions LogOptions { get; }
+    }
+    public sealed class Cmd<TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, System.Func<System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, System.Func<MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, MetaFac.TinyCLI.Arg<TArg8> argDef8, MetaFac.TinyCLI.Arg<TArg9> argDef9, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, MetaFac.TinyCLI.Arg<TArg8> argDef8, MetaFac.TinyCLI.Arg<TArg9> argDef9, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, System.Func<TArg1, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, System.Func<TArg1, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TArg2, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, System.Func<TArg1, TArg2, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, System.Func<TArg1, TArg2, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TArg2, TArg3, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, System.Func<TArg1, TArg2, TArg3, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, System.Func<TArg1, TArg2, TArg3, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TArg2, TArg3, TArg4, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, System.Func<TArg1, TArg2, TArg3, TArg4, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, System.Func<TArg1, TArg2, TArg3, TArg4, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public sealed class Cmd<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TResult> : MetaFac.TinyCLI.CmdBase<TResult>
+    {
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, MetaFac.TinyCLI.Arg<TArg8> argDef8, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        public Cmd(string name, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, MetaFac.TinyCLI.Arg<TArg8> argDef8, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, System.Threading.Tasks.ValueTask<TResult>> action, MetaFac.TinyCLI.CmdOptions? options, System.Func<TResult, int>? exitFunc) { }
+        protected override System.Threading.Tasks.ValueTask<int> OnRun(MetaFac.TinyCLI.InternalLogger? logger, string[] args) { }
+    }
+    public abstract class CommandsBase
+    {
+        protected CommandsBase(string name, string help, MetaFac.TinyCLI.CmdOptions? options = null) { }
+        public string Help { get; }
+        protected Microsoft.Extensions.Logging.ILogger Logger { get; }
+        public string Name { get; }
+        public MetaFac.TinyCLI.CmdOptions Options { get; }
+        protected void AddCommand<TResult>(string command, string help, System.Func<System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TResult>(string command, string help, System.Func<MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, System.Func<TArg1, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, System.Func<TArg1, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, System.Func<TArg1, TArg2, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, System.Func<TArg1, TArg2, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, System.Func<TArg1, TArg2, TArg3, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, System.Func<TArg1, TArg2, TArg3, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, System.Func<TArg1, TArg2, TArg3, TArg4, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, System.Func<TArg1, TArg2, TArg3, TArg4, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, MetaFac.TinyCLI.Arg<TArg8> argDef8, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, MetaFac.TinyCLI.Arg<TArg8> argDef8, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, MetaFac.TinyCLI.Arg<TArg8> argDef8, MetaFac.TinyCLI.Arg<TArg9> argDef9, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddCommand<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, TResult>(string command, string help, MetaFac.TinyCLI.Arg<TArg1> argDef1, MetaFac.TinyCLI.Arg<TArg2> argDef2, MetaFac.TinyCLI.Arg<TArg3> argDef3, MetaFac.TinyCLI.Arg<TArg4> argDef4, MetaFac.TinyCLI.Arg<TArg5> argDef5, MetaFac.TinyCLI.Arg<TArg6> argDef6, MetaFac.TinyCLI.Arg<TArg7> argDef7, MetaFac.TinyCLI.Arg<TArg8> argDef8, MetaFac.TinyCLI.Arg<TArg9> argDef9, System.Func<TArg1, TArg2, TArg3, TArg4, TArg5, TArg6, TArg7, TArg8, TArg9, MetaFac.TinyCLI.OtherArgs, System.Threading.Tasks.ValueTask<TResult>> action, System.Func<TResult, int>? exitFunc = null) { }
+        protected void AddSubCommands(MetaFac.TinyCLI.CommandsBase subCommand) { }
+        protected bool HelpRequested(string[] args) { }
+        public System.Threading.Tasks.ValueTask<int> Run(string[] args) { }
+    }
+    [System.Flags]
+    public enum DisplayFlags
+    {
+        Default = 0,
+        HideTitle = 1,
+        HideCredits = 2,
+        HideInputs = 4,
+        HideExitCode = 8,
+        HideLogs = 16,
+        HideAll = 31,
+    }
+    public sealed class InternalLogger : Microsoft.Extensions.Logging.ILogger
+    {
+        public InternalLogger(MetaFac.TinyCLI.LogOptions options) { }
+        public int EntryCount { get; }
+        public System.IDisposable BeginScope<TState>(TState state)
+            where TState :  notnull { }
+        public Spectre.Console.Table GetEntriesAsTable() { }
+        public bool IsEnabled(Microsoft.Extensions.Logging.LogLevel logLevel) { }
+        public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId, TState state, System.Exception? exception, System.Func<TState, System.Exception?, string> formatter) { }
+    }
+    public class LogOptions
+    {
+        public LogOptions(Microsoft.Extensions.Logging.LogLevel minimumLevel = 2, bool useUtcTime = false, string? timeFormat = null, bool allowMarkup = false, Microsoft.Extensions.Logging.ILogger? externalLogger = null) { }
+        public bool AllowMarkup { get; }
+        public Microsoft.Extensions.Logging.ILogger? ExternalLogger { get; }
+        public Microsoft.Extensions.Logging.LogLevel MinimumLevel { get; }
+        public string TimeFormat { get; }
+        public bool UseUtcTime { get; }
+    }
+    public sealed class OtherArgs : System.Collections.Generic.IEnumerable<string>, System.Collections.Generic.IReadOnlyCollection<string>, System.Collections.Generic.IReadOnlyList<string>, System.Collections.IEnumerable
+    {
+        public OtherArgs(System.Collections.Generic.List<string> args) { }
+        public int Count { get; }
+        public string this[int index] { get; }
+        public System.Collections.Generic.IEnumerator<string> GetEnumerator() { }
+    }
+}

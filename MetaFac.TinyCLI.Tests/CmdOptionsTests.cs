@@ -1,11 +1,10 @@
 using FluentAssertions;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace MetaFac.TinyCLI.Tests
 {
-    public class UnitTest1
+    public class CmdOptionsTests
     {
         [Fact]
         public void CreateEmptyCommands()

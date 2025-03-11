@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using VerifyXunit;
 using Xunit;
 using PublicApiGenerator;
+using Shouldly;
 
 namespace MetaFac.TinyCLI.Tests
 {
@@ -11,7 +11,7 @@ namespace MetaFac.TinyCLI.Tests
         [Fact]
         public void VersionCheck()
         {
-            ThisAssembly.AssemblyVersion.Should().Be("2.0.0.0");
+            ThisAssembly.AssemblyVersion.ShouldBe("2.0.0.0");
         }
 
         [Fact]

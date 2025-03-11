@@ -1,4 +1,4 @@
-using FluentAssertions;
+using Shouldly;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -11,7 +11,7 @@ namespace MetaFac.TinyCLI.Tests
         {
             var options = new CmdOptions();
             var commands = new TestCommands(options);
-            commands.Should().NotBeNull();
+            commands.ShouldNotBeNull();
         }
 
         [Theory]
@@ -23,7 +23,7 @@ namespace MetaFac.TinyCLI.Tests
             var commands = new TestCommands(options);
             string[] args = { "cmd0", "-x", "value" };
             int result = await commands.Run(args);
-            result.Should().Be(expectedResult);
+            result.ShouldBe(expectedResult);
         }
     }
 }
